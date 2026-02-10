@@ -6,8 +6,6 @@ const path = require('path');
 // JSON file containing seed data - will be changed to a database in future assignments
 const db = require("./database.json");
 
-throw new Error("Intentional CI failure");
-
 const PORT = 8080;
 
 app.use('/', express.static(path.join(__dirname, '/public')));
@@ -15,7 +13,7 @@ app.use('/', express.static(path.join(__dirname, '/public')));
 // Server paths
 // Skeleton pages - intended to be updated/replaced
 app.get('/', (req, res) => {
-    res.send(`<h1>${db.notes[0].note}</h1>`);
+    res.send(`<h1>${db.note[0].note}</h1>`);
     // res.sendFile(path.join(__dirname, '/views/PLACEHOLDER.html'))
 });
 
