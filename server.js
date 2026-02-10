@@ -6,6 +6,8 @@ const path = require('path');
 // JSON file containing seed data - will be changed to a database in future assignments
 const db = require("./database.json");
 
+throw new Error("Intentional CI failure");
+
 const PORT = 8080;
 
 app.use('/', express.static(path.join(__dirname, '/public')));
