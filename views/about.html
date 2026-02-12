@@ -2,19 +2,52 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>About - CPS630 Web App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - CPS630 Blog</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@400;700&display=swap">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <nav>
-    <a href="/">Home</a>
-    <a href="/notes">Notes</a>
-    <a href="/about">About</a>
-  </nav>
+  <header>
+    <div class="header-inner">
+      <a href="/" class="site-title">CPS630 Blog</a>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/notes">Posts</a>
+        <a href="/about">About</a>
+      </nav>
+    </div>
+  </header>
+
   <main>
-    <h1>About</h1>
-    <p>This is our A1 multi-page web app. It uses Node, Express, and a REST API. Notes are saved in a JSON file.</p>
+    <section class="page-header">
+      <h1>About</h1>
+    </section>
+
+    <section class="about-content">
+      <h2>What is this?</h2>
+      <p>CPS630 Blog is a multi-page web application built for Assignment 1 of CPS630 Web Application Development at Toronto Metropolitan University. It demonstrates a basic client-server architecture using Node.js, Express, and a REST API.</p>
+
+      <h2>How it works</h2>
+      <p>The app runs on a Node.js server using the Express framework. Posts are stored in a JSON file on the server. The front end communicates with the server through three API endpoints:</p>
+      <ul>
+        <li><code>GET /api/notes</code> - fetch all posts</li>
+        <li><code>POST /api/notes</code> - add a new post</li>
+        <li><code>DELETE /api/notes/:id</code> - delete a post by ID</li>
+      </ul>
+
+      <h2>Future improvements</h2>
+      <p>This application could be extended in several ways: replacing the JSON file with an exteral database, adding user authentication, rebuilding the front end in React, or supporting rich text editing for posts.</p>
+
+      <h2>Built by</h2>
+      <p>Group project for CPS630 &mdash; Winter 2026.</p>
+    </section>
   </main>
+
+  <footer>
+    <p>CPS630 Web Application Development &mdash; A1</p>
+  </footer>
 </body>
 </html>

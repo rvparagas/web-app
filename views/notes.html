@@ -2,24 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Notes - CPS630 Web App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Posts - CPS630 Blog</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@400;700&display=swap">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <nav>
-    <a href="/">Home</a>
-    <a href="/notes">Notes</a>
-    <a href="/about">About</a>
-  </nav>
-  <main>
-    <h1>Notes</h1>
-    <div class="add-row">
-      <input type="text" id="new-note" placeholder="Enter a new note...">
-      <button id="add-btn">Add</button>
+  <header>
+    <div class="header-inner">
+      <a href="/" class="site-title">CPS630 Blog</a>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/notes">Posts</a>
+        <a href="/about">About</a>
+      </nav>
     </div>
-    <ul id="notes-list"></ul>
+  </header>
+
+  <main>
+    <section class="page-header">
+      <h1>Posts</h1>
+    </section>
+
+    <section class="posts-section">
+      <div class="add-row">
+        <input type="text" id="new-note" placeholder="Write a new post...">
+        <button id="add-btn" class="btn">Add Post</button>
+      </div>
+      <ul id="notes-list"></ul>
+    </section>
   </main>
+
+  <footer>
+    <p>CPS630 Web Application Development &mdash; A1</p>
+  </footer>
 
   <script>
     var listEl = document.getElementById('notes-list');
@@ -32,7 +50,7 @@
         .then(function(notes) {
           listEl.innerHTML = '';
           if (notes.length === 0) {
-            listEl.innerHTML = '<li>No notes yet.</li>';
+            listEl.innerHTML = '<li class="empty">No posts yet. Add one above.</li>';
             return;
           }
           for (var i = 0; i < notes.length; i++) {
@@ -54,7 +72,9 @@
             listEl.appendChild(li);
           }
         })
-        .catch(function() { listEl.innerHTML = '<li>Error loading notes.</li>'; });
+        .catch(function() {
+          listEl.innerHTML = '<li class="empty">Error loading posts.</li>';
+        });
     }
 
     addBtn.onclick = function() {
@@ -70,7 +90,9 @@
           inputEl.value = '';
           loadNotes();
         })
-        .catch(function() { listEl.innerHTML = '<li>Error adding note.</li>'; });
+        .catch(function() {
+          listEl.innerHTML = '<li class="empty">Error adding post.</li>';
+        });
     };
 
     loadNotes();
