@@ -1,4 +1,6 @@
-// Server initialization
+// CPS630 A1 - Multi-page Web Application
+// server.js: Express server, static files, HTML routes, REST API (notes in database.json)
+
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
@@ -40,6 +42,26 @@ function writeDb(data) {
 app.get('/api/notes', (req, res) => {
     const db = readDb();
     res.type('application/json').status(200).json(db.notes);
+});
+
+// GET /api/notes/:id — return a single note by id
+app.get('/api/notes/:id', (req, res) => {
+    const id = parseInt(req.params.id, 10);
+    if (Number.isNaN(id)) {
+        return res.type('application/json').status(400).json({
+            error: 'Bad request',
+            message: 'Invalid note id.'
+        });
+    }
+    const db = readDb();
+    const note = db.notes.find((n) => n.id === id);
+    if (!note) {
+        return res.type('application/json').status(404).json({
+            error: 'Not found',
+            message: `Note with id ${id} not found.`
+        });
+    }
+    res.type('application/json').status(200).json(note);
 });
 
 // POST /api/notes — add a new note (body: { note: "string" })

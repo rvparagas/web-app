@@ -20,9 +20,10 @@ This is a simple notes app for CPS630 A1. Users can view a list of notes, add ne
 
 **REST API**
 
-- `GET /api/notes` – returns the list of notes (JSON)
-- `POST /api/notes` – add a note; send JSON body `{ "note": "your text" }`
-- `DELETE /api/notes/:id` – delete the note with that id
+- `GET /api/notes` – returns the list of all notes (JSON, 200)
+- `GET /api/notes/:id` – returns a single note by id (200, or 404 if not found)
+- `POST /api/notes` – add a note; send JSON body `{ "note": "your text" }` (201, or 400 if invalid)
+- `DELETE /api/notes/:id` – delete the note with that id (204, or 404 if not found)
 
 ## Reflection
 
