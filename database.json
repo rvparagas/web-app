@@ -1,6 +1,16 @@
 {
-  "notes": [
-    { "id": 1, "note": "Placeholder data structure" },
-    { "id": 2, "note": "Replace with actual data later" }
-  ]
+    "notes": [
+        {
+            "id": 1,
+            "note": "Placeholder data structure"
+        },
+        {
+            "id": 2,
+            "note": "Replace with actual data later"
+        },
+        {
+            "id": 3,
+            "note": "asdasd"
+        }
+    ]
 }

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Notes - CPS630 Web App</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/notes">Notes</a>
+    <a href="/about">About</a>
+  </nav>
+  <main>
+    <h1>Notes</h1>
+    <div class="add-row">
+      <input type="text" id="new-note" placeholder="Enter a new note...">
+      <button id="add-btn">Add</button>
+    </div>
+    <ul id="notes-list"></ul>
+  </main>
+
+  <script>
+    var listEl = document.getElementById('notes-list');
+    var inputEl = document.getElementById('new-note');
+    var addBtn = document.getElementById('add-btn');
+
+    function loadNotes() {
+      fetch('/api/notes')
+        .then(function(res) { return res.json(); })
+        .then(function(notes) {
+          listEl.innerHTML = '';
+          if (notes.length === 0) {
+            listEl.innerHTML = '<li>No notes yet.</li>';
+            return;
+          }
+          for (var i = 0; i < notes.length; i++) {
+            var li = document.createElement('li');
+            var span = document.createElement('span');
+            span.className = 'note-text';
+            span.textContent = notes[i].note;
+            li.appendChild(span);
+            var btn = document.createElement('button');
+            btn.textContent = 'Delete';
+            btn.className = 'delete-btn';
+            btn.onclick = (function(id) {
+              return function() {
+                fetch('/api/notes/' + id, { method: 'DELETE' })
+                  .then(function() { loadNotes(); });
+              };
+            })(notes[i].id);
+            li.appendChild(btn);
+            listEl.appendChild(li);
+          }
+        })
+        .catch(function() { listEl.innerHTML = '<li>Error loading notes.</li>'; });
+    }
+
+    addBtn.onclick = function() {
+      var text = inputEl.value.trim();
+      if (!text) return;
+      fetch('/api/notes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ note: text })
+      })
+        .then(function(res) { return res.json(); })
+        .then(function() {
+          inputEl.value = '';
+          loadNotes();
+        })
+        .catch(function() { listEl.innerHTML = '<li>Error adding note.</li>'; });
+    };
+
+    loadNotes();
+  </script>
+</body>
+</html>
