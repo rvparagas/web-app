@@ -1,6 +1,6 @@
 /* styles for the web app */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Lato', sans-serif;
   margin: 0;
   padding: 0;
   background: #f1f5f9;
@@ -36,7 +36,8 @@ main {
   box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
 
-h1 {
+h1, h2 {
+  font-family: 'Playfair Display', serif;
   font-size: 22px;
   margin: 0 0 12px 0;
   color: #0f172a;
