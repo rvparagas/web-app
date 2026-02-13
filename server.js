@@ -132,10 +132,7 @@ app.get('/about', (req, res) => {
 
 // 404 — invalid or unknown routes
 app.use((req, res) => {
-    res.type('application/json').status(404).json({
-        error: 'Not found',
-        message: `Cannot ${req.method} ${req.path}`
-    });
+    res.status(404).sendFile(path.join(viewsDir, '404.html'));
 });
 
 // Start server
