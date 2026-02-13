@@ -130,8 +130,14 @@ app.get('/about', (req, res) => {
     res.sendFile(path.join(viewsDir, 'about.html'));
 });
 
-// 404 — invalid or unknown routes
+// 404 — serve HTML page for unknown page routes, JSON for unknown API routes
 app.use((req, res) => {
+    if (req.path.startsWith('/api/')) {
+        return res.type('application/json').status(404).json({
+            error: 'Not found',
+            message: `Cannot ${req.method} ${req.path}`
+        });
+    }
     res.status(404).sendFile(path.join(viewsDir, '404.html'));
 });
 

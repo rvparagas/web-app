@@ -1,6 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<<<<<<< HEAD
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Posts - CPS630 Blog</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@400;700&display=swap">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="/" class="site-title">CPS630 Blog</a>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/notes">Posts</a>
+        <a href="/about">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-header">
+      <h1>Posts</h1>
+    </section>
+
+    <section class="posts-section">
+      <div class="add-row">
+        <input type="text" id="new-note" placeholder="Write a new post...">
+        <button id="add-btn" class="btn">Add Post</button>
+      </div>
+      <ul id="notes-list"></ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>CPS630 Web Application Development &mdash; A1</p>
+  </footer>
+
+  <script>
+    var listEl = document.getElementById('notes-list');
+    var inputEl = document.getElementById('new-note');
+    var addBtn = document.getElementById('add-btn');
+
+    function loadNotes() {
+      fetch('/api/notes')
+        .then(function(res) { return res.json(); })
+        .then(function(notes) {
+          listEl.innerHTML = '';
+          if (notes.length === 0) {
+            listEl.innerHTML = '<li class="empty">No posts yet. Add one above.</li>';
+            return;
+          }
+          for (var i = 0; i < notes.length; i++) {
+            var li = document.createElement('li');
+            var span = document.createElement('span');
+            span.className = 'note-text';
+            span.textContent = notes[i].note;
+            li.appendChild(span);
+            var btn = document.createElement('button');
+            btn.textContent = 'Delete';
+            btn.className = 'delete-btn';
+            btn.onclick = (function(id) {
+              return function() {
+                fetch('/api/notes/' + id, { method: 'DELETE' })
+                  .then(function() { loadNotes(); });
+              };
+            })(notes[i].id);
+            li.appendChild(btn);
+            listEl.appendChild(li);
+          }
+        })
+        .catch(function() {
+          listEl.innerHTML = '<li class="empty">Error loading posts.</li>';
+        });
+    }
+
+    addBtn.onclick = function() {
+      var text = inputEl.value.trim();
+      if (!text) return;
+      fetch('/api/notes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ note: text })
+      })
+        .then(function(res) { return res.json(); })
+        .then(function() {
+          inputEl.value = '';
+          loadNotes();
+        })
+        .catch(function() {
+          listEl.innerHTML = '<li class="empty">Error adding post.</li>';
+        });
+    };
+=======
 	<meta charset="UTF-8">
 	<title>Notes - CPS630 Web App</title>
 	<link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -72,6 +167,7 @@
 			})
 			.catch(function() { listEl.innerHTML = '<li>Error adding note.</li>'; });
 		};
+>>>>>>> cad52f1ce7dfe954b8ce018fb9ea6925db01c7ba
 
 		loadNotes();
 	</script>
