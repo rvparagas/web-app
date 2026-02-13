@@ -2,15 +2,15 @@
     "notes": [
         {
             "id": 1,
-            "note": "Placeholder data structure"
+            "note": "Purchase bread and cheese on Friday"
         },
         {
             "id": 2,
-            "note": "Replace with actual data later"
+            "note": "Complete project by next week"
         },
         {
             "id": 3,
-            "note": "asdasd"
+            "note": "Take a walk in the park"
         }
     ]
 }
