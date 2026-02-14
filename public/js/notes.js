@@ -5,23 +5,25 @@ var searchEl = document.getElementById('search-note');
 var viewArea = document.getElementById('view-area');
 var allNotes = [];
 
+// Displays full note when 'View' button for a note is pressed
 function viewNote(id) {
 	viewArea.textContent = 'Loading...';
 	viewArea.style.display = 'block';
 	fetch('/api/notes/' + id)
-		.then(function (res) { return res.json(); })
-		.then(function (note) {
-			viewArea.textContent = 'Post #' + note.id + ': ' + note.note;
+		.then(function(res) { return res.json(); })
+		.then(function(note) {
+			viewArea.textContent = 'Note #' + note.id + ': ' + note.note;
 		})
-		.catch(function () {
-			viewArea.textContent = 'Could not load post.';
+		.catch(function() {
+			viewArea.textContent = 'Could not load note.';
 		});
 }
 
+// Shows all notes that match search criteria
 function renderNotes(notes) {
 	listEl.innerHTML = '';
 	if (notes.length === 0) {
-		listEl.innerHTML = '<li class="empty">No posts match your search.</li>';
+		listEl.innerHTML = '<li class="empty">No notes match your search.</li>';
 		return;
 	}
 	for (var i = 0; i < notes.length; i++) {
@@ -30,30 +32,36 @@ function renderNotes(notes) {
 		span.className = 'note-text';
 		span.textContent = notes[i].note;
 		li.appendChild(span);
+		
 		var viewBtn = document.createElement('button');
 		viewBtn.textContent = 'View';
 		viewBtn.className = 'view-btn';
-		viewBtn.onclick = (function (id) {
-			return function () { viewNote(id); };
+
+		viewBtn.onclick = (function(id) {
+			return function() { viewNote(id); };
 		})(notes[i].id);
+
 		li.appendChild(viewBtn);
 		var btn = document.createElement('button');
 		btn.textContent = 'Delete';
 		btn.className = 'delete-btn';
-		btn.onclick = (function (id) {
-			return function () {
+
+		btn.onclick = (function(id) {
+			return function() {
 				fetch('/api/notes/' + id, { method: 'DELETE' })
-					.then(function () { loadNotes(); });
+					.then(function() { loadNotes(); });
 			};
 		})(notes[i].id);
+
 		li.appendChild(btn);
 		listEl.appendChild(li);
 	}
 }
 
+// Filters through notes, then shows notes
 function filterAndRender() {
 	if (allNotes.length === 0) {
-		listEl.innerHTML = '<li class="empty">No posts yet. Add one above.</li>';
+		listEl.innerHTML = '<li class="empty">No notes yet. Add one above.</li>';
 		return;
 	}
 	var q = searchEl.value.trim().toLowerCase();
@@ -70,25 +78,27 @@ function filterAndRender() {
 	renderNotes(filtered);
 }
 
+// Shows all added notes
 function loadNotes() {
 	viewArea.style.display = 'none';
 	viewArea.textContent = '';
 	fetch('/api/notes')
-		.then(function (res) { return res.json(); })
-		.then(function (notes) {
+		.then(function(res) { return res.json(); })
+		.then(function(notes) {
 			allNotes = notes;
 			if (notes.length === 0) {
-				listEl.innerHTML = '<li class="empty">No posts yet. Add one above.</li>';
+				listEl.innerHTML = '<li class="empty">No notes yet. Add one above.</li>';
 				return;
 			}
 			filterAndRender();
 		})
-		.catch(function () {
-			listEl.innerHTML = '<li class="empty">Error loading posts.</li>';
+		.catch(function() {
+			listEl.innerHTML = '<li class="empty">Error loading notes.</li>';
 		});
 }
 
-addBtn.onclick = function () {
+// Adds note through POST method
+addBtn.onclick = function() {
 	var text = inputEl.value.trim();
 	if (!text) return;
 	fetch('/api/notes', {
@@ -96,13 +106,13 @@ addBtn.onclick = function () {
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ note: text })
 	})
-		.then(function (res) { return res.json(); })
-		.then(function () {
+		.then(function(res) { return res.json(); })
+		.then(function() {
 			inputEl.value = '';
 			loadNotes();
 		})
-		.catch(function () {
-			listEl.innerHTML = '<li class="empty">Error adding post.</li>';
+		.catch(function() {
+			listEl.innerHTML = '<li class="empty">Error adding note.</li>';
 		});
 };
 
