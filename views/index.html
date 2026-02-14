@@ -13,8 +13,9 @@
   <header>
     <div class="header-inner">
       <nav>
+        <img src="favicon.svg" alt="Sticky Note">
         <a href="/">Home</a>
-        <a href="/notes">Posts</a>
+        <a href="/notes">Notes</a>
         <a href="/about">About</a>
       </nav>
     </div>
@@ -23,24 +24,25 @@
   <main>
     <section class="hero">
       <h1>Welcome to CPS630 Blog</h1>
-      <p>A place to write, share, and manage your posts.</p>
-      <a href="/notes" class="btn">Browse Posts</a>
+      <p>A place to write, share, and manage your notes.</p>
+      <button type="button" id="blue-btn" onclick="window.location.href = '/notes'">Browse Notes</button>
     </section>
-
+    <br>
     <section class="features">
       <div class="feature-card">
         <h2>Write</h2>
-        <p>Add a new post from the Posts page. Your entry is saved on the server.</p>
+        <p>Add a new note from the Notes page. Your entry is saved on the server.</p>
       </div>
       <div class="feature-card">
         <h2>Browse</h2>
-        <p>View all posts in one place.</p>
+        <p>View all notes in one place.</p>
       </div>
       <div class="feature-card">
         <h2>Delete</h2>
-        <p>Remove a post you no longer need. Changes are reflected immediately.</p>
+        <p>Remove a note you no longer need. Changes are reflected immediately.</p>
       </div>
     </section>
+    <img src="notes_and_coffee.jpg" alt="Notes" style="max-width: 100%;">
   </main>
 
 </body>

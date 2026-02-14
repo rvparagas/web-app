@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Posts - CPS630 Blog</title>
+  <title>Notes - CPS630 Blog</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@400;700&display=swap">
@@ -13,8 +13,9 @@
   <header>
     <div class="header-inner">
       <nav>
+        <img src="favicon.svg" alt="Sticky Note">
         <a href="/">Home</a>
-        <a href="/notes">Posts</a>
+        <a href="/notes">Notes</a>
         <a href="/about">About</a>
       </nav>
     </div>
@@ -22,13 +23,13 @@
 
   <main>
     <section class="page-header">
-      <h1>Posts</h1>
+      <h1>Notes</h1>
     </section>
 
-    <section class="posts-section">
+    <section class="notes-section">
       <div class="add-row">
-        <input type="text" id="new-note" placeholder="Write a new post...">
-        <button id="add-btn" class="btn">Add Post</button>
+        <input type="text" id="new-note" placeholder="Write a new note...">
+        <button id="blue-btn" class="btn">Add Post</button>
       </div>
       <ul id="notes-list"></ul>
     </section>
@@ -37,7 +38,7 @@
   <script>
     var listEl = document.getElementById('notes-list');
     var inputEl = document.getElementById('new-note');
-    var addBtn = document.getElementById('add-btn');
+    var addBtn = document.getElementById('blue-btn');
 
     function loadNotes() {
       fetch('/api/notes')
@@ -45,7 +46,7 @@
         .then(function(notes) {
           listEl.innerHTML = '';
           if (notes.length === 0) {
-            listEl.innerHTML = '<li class="empty">No posts yet. Add one above.</li>';
+            listEl.innerHTML = '<li class="empty">No notes yet. Add one above.</li>';
             return;
           }
           for (var i = 0; i < notes.length; i++) {
@@ -68,7 +69,7 @@
           }
         })
         .catch(function() {
-          listEl.innerHTML = '<li class="empty">Error loading posts.</li>';
+          listEl.innerHTML = '<li class="empty">Error loading notes.</li>';
         });
     }
 
@@ -86,7 +87,7 @@
           loadNotes();
         })
         .catch(function() {
-          listEl.innerHTML = '<li class="empty">Error adding post.</li>';
+          listEl.innerHTML = '<li class="empty">Error adding note.</li>';
         });
     };
 
