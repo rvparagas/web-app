@@ -27,9 +27,9 @@ nav a:hover {
 }
 
 nav img {
-  vertical-align: middle;
-  width: 28px;
-  margin-right: 20px;
+	vertical-align: middle;
+	width: 28px;
+	margin-right: 20px;
 }
 
 main {
@@ -39,7 +39,7 @@ main {
 	background: white;
 	border-radius: 8px;
 	border: 1px solid #e2e8f0;
-	box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
 h1, h2 {
@@ -72,11 +72,11 @@ main a:hover {
 }
 
 .search-row {
-  margin-bottom: 16px;
+	margin-bottom: 16px;
 }
 
 .search-row input {
-  max-width: 280px;
+	max-width: 280px;
 }
 
 input {
@@ -102,13 +102,13 @@ button {
 	font-weight: 500;
 }
 
-#blue-btn {
+#add-btn {
 	background: #2563eb;
 	color: white;
 }
 
-#blue-btn:hover {
-  	background: #1d4ed8;
+#add-btn:hover {
+	background: #1d4ed8;
 }
 
 ul {
@@ -142,25 +142,25 @@ li .note-text {
 }
 
 .delete-btn:hover {
-  background: #b91c1c;
+	background: #b91c1c;
 }
 
 .view-btn {
-  background: #64748b;
-  color: white;
-  padding: 6px 12px;
-  font-size: 13px;
+	background: #64748b;
+	color: white;
+	padding: 6px 12px;
+	font-size: 13px;
 }
 
 .view-btn:hover {
-  background: #475569;
+	background: #475569;
 }
 
 .view-single {
-  margin-bottom: 12px;
-  padding: 10px 12px;
-  background: #f1f5f9;
-  border-radius: 6px;
-  font-size: 14px;
-  display: none;
+	margin-bottom: 12px;
+	padding: 10px 12px;
+	background: #f1f5f9;
+	border-radius: 6px;
+	font-size: 14px;
+	display: none;
 }

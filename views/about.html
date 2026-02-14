@@ -1,50 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About - CPS630 Blog</title>
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@400;700&display=swap">
-  <link rel="stylesheet" href="/css/style.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>About - CPS630 Blog</title>
+	<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@400;700&display=swap">
+	<link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <header>
-    <div class="header-inner">
-      <nav>
-        <img src="favicon.svg" alt="Sticky Note">
-        <a href="/">Home</a>
-        <a href="/notes">Notes</a>
-        <a href="/about">About</a>
-      </nav>
-    </div>
-  </header>
+	<header>
+		<div class="header-inner">
+			<nav>
+				<img src="favicon.svg" alt="Sticky Note">
+				<a href="/">Home</a>
+				<a href="/notes">Notes</a>
+				<a href="/about">About</a>
+			</nav>
+		</div>
+	</header>
+	<main>
+		<section class="page-header">
+			<h1>About</h1>
+		</section>
 
-  <main>
-    <section class="page-header">
-      <h1>About</h1>
-    </section>
+		<section class="about-content">
+			<h2>What is this?</h2>
+			<p>CPS630 Blog is a multi-page web application built for Assignment 1 of CPS630 Web Application Development
+				at Toronto Metropolitan University. It demonstrates a basic client-server architecture using Node.js,
+				Express, and a REST API.</p>
 
-    <section class="about-content">
-      <h2>What is this?</h2>
-      <p>CPS630 Blog is a multi-page web application built for Assignment 1 of CPS630 Web Application Development at Toronto Metropolitan University. It demonstrates a basic client-server architecture using Node.js, Express, and a REST API.</p>
+			<h2>How it works</h2>
+			<p>The app runs on a Node.js server using the Express framework. Notes are stored in a JSON file on the
+				server. The front end communicates with the server through three API endpoints:</p>
+			<ul>
+				<li><code>GET /api/notes</code> - fetch all notes</li>
+				<li><code>GET /api/notes/:id</code> - fetch a note by ID</li>
+				<li><code>POST /api/notes</code> - add a new note</li>
+				<li><code>DELETE /api/notes/:id</code> - delete a note by ID</li>
+			</ul>
 
-      <h2>How it works</h2>
-      <p>The app runs on a Node.js server using the Express framework. Notes are stored in a JSON file on the server. The front end communicates with the server through three API endpoints:</p>
-      <ul>
-        <li><code>GET /api/notes</code> - fetch all notes</li>
-        <li><code>GET /api/notes/:id</code> - fetch a note by ID</li>
-        <li><code>POST /api/notes</code> - add a new note</li>
-        <li><code>DELETE /api/notes/:id</code> - delete a note by ID</li>
-      </ul>
+			<h2>Future improvements</h2>
+			<p>This application could be extended in several ways: replacing the JSON file with an exteral database,
+				adding user authentication, rebuilding the front end in React, or supporting rich text editing for
+				notes.</p>
 
-      <h2>Future improvements</h2>
-      <p>This application could be extended in several ways: replacing the JSON file with an exteral database, adding user authentication, rebuilding the front end in React, or supporting rich text editing for notes.</p>
-
-      <h2>Built by</h2>
-      <p>Group project for CPS630 &mdash; Winter 2026.</p>
-    </section>
-  </main>
+			<h2>Built by</h2>
+			<p>Group project for CPS630 &mdash; Winter 2026.</p>
+		</section>
+	</main>
 </body>
 </html>
