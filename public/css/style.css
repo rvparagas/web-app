@@ -65,6 +65,14 @@ main a:hover {
   align-items: center;
 }
 
+.search-row {
+  margin-bottom: 16px;
+}
+
+.search-row input {
+  max-width: 280px;
+}
+
 input {
   padding: 10px 12px;
   width: 100%;
@@ -129,4 +137,24 @@ li .note-text {
 
 .delete-btn:hover {
   background: #b91c1c;
+}
+
+.view-btn {
+  background: #64748b;
+  color: white;
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+.view-btn:hover {
+  background: #475569;
+}
+
+.view-single {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  background: #f1f5f9;
+  border-radius: 6px;
+  font-size: 14px;
+  display: none;
 }
