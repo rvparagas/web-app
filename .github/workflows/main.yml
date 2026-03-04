@@ -7,6 +7,9 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: back-end
 
     steps:
       - uses: actions/checkout@v4
@@ -19,6 +22,6 @@ jobs:
 
       - name: Start server
         run: |
-          PORT=8080 node server.js &
+          PORT=8080 npm start &
           sleep 5
           curl -f http://localhost:8080
