@@ -5,15 +5,64 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 
-const app = express();
 const PORT = 8080;
 const DB_PATH = path.join(__dirname, 'database.json');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const userRoute = require('./routes/user.route');
+const User = require('./models/user.model');
+
+
+
+
+dotenv.config();
+
+
+const testUsers = [
+    { id: 1, notes: 'First seeded note' },
+    { id: 2, notes: 'Second seeded note' },
+    { id: 3, notes: 'Third seeded note' }
+];
+
+
+//Added Test Users To Check To see if Connected To MongoDB 
+async function addTestUsersToMongoDB() {
+    const userCount = await User.countDocuments();
+
+    if (userCount === 0) {
+        console.log('Adding test users to MongoDB...');
+        await User.insertMany(testUsers);
+        console.log('Seeded users:', testUsers.length);
+        return;
+    }
+
+    console.log('Users already exist. Skipping seed.');
+}
+
+// Uses the env package to have clean coding (do 'npm i dotenv' to connect it properly)
+mongoose.connect(process.env.MONGO)
+    .then(async () => {
+        console.log('MongoDB is connected!');
+        await addTestUsersToMongoDB();
+    })
+    .catch((err) => console.log(err));
+
+
+
+const app = express();
+
+// Start server
+app.listen(PORT, () => console.log('Server started on port ' + PORT));
+
+//Testing 
+app.use("/api/user", userRoute);
+
 
 // Parse JSON request bodies (for POST)
 app.use(express.json());
 
-// Serve static assets from public/
-app.use('/', express.static(path.join(__dirname, 'public')));
+// Serve static assets from front-end/public/
+app.use('/', express.static(path.join(__dirname, '../front-end/public')));
 
 // --- Database helpers (read/write JSON file) ---
 function readDb() {
@@ -116,7 +165,7 @@ app.delete('/api/notes/:id', (req, res) => {
 });
 
 // --- HTML routes (3 pages with shared layout via static CSS) ---
-const viewsDir = path.join(__dirname, 'views');
+const viewsDir = path.join(__dirname, '../front-end/views');
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(viewsDir, 'index.html'));
@@ -141,5 +190,3 @@ app.use((req, res) => {
     res.status(404).sendFile(path.join(viewsDir, '404.html'));
 });
 
-// Start server
-app.listen(PORT, () => console.log('Server started on port ' + PORT));
