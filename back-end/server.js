@@ -8,14 +8,12 @@ const path = require('path');
 const PORT = 8080;
 const DB_PATH = path.join(__dirname, 'database.json');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
 const userRoute = require('./routes/user.route');
 const User = require('./models/user.model');
 
-
-
-
-dotenv.config();
+const DATABASE_HOST = 'localhost';
+const DATABASE_PORT = '27017';
+const dbURL = `mongodb://${DATABASE_HOST}:${DATABASE_PORT}/usernotes`;
 
 
 const testUsers = [
@@ -39,8 +37,7 @@ async function addTestUsersToMongoDB() {
     console.log('Users already exist. Skipping seed.');
 }
 
-// Uses the env package to have clean coding (do 'npm i dotenv' to connect it properly)
-mongoose.connect(process.env.MONGO)
+mongoose.connect(dbURL)
     .then(async () => {
         console.log('MongoDB is connected!');
         await addTestUsersToMongoDB();
@@ -189,4 +186,3 @@ app.use((req, res) => {
     }
     res.status(404).sendFile(path.join(viewsDir, '404.html'));
 });
-
