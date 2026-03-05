@@ -1,0 +1,86 @@
+.btn-back {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  padding: 0;
+  margin-bottom: 2rem;
+}
+
+.btn-back:hover {
+  color: var(--accent);
+}
+
+.detail-article {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  padding: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.detail-passage {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.4rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.detail-source {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.detail-commentary h3 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.detail-commentary p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  border-left: 2px solid var(--border);
+  padding-left: 1rem;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+}
+
+.detail-tag {
+  display: inline-block;
+  font-size: 0.78rem;
+  background-color: var(--bg);
+  border: 1px solid var(--border);
+  padding: 0.2rem 0.6rem;
+  color: var(--text-muted);
+}
+
+.btn-random {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 0.5rem 1.1rem;
+  font-size: 0.88rem;
+}
+
+.btn-random:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.detail-empty,
+.detail-loading {
+  text-align: center;
+  padding: 4rem 0;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.detail-empty button {
+  display: block;
+  margin: 1rem auto 0;
+  background: none;
+  border: 1px solid var(--border);
+  padding: 0.5rem 1rem;
+  color: var(--text-muted);
+}
