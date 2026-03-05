@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  run:
+  backend:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,10 +15,43 @@ jobs:
         with:
           node-version: 18
 
-      - run: npm install
+      - name: Install dependencies
+        working-directory: backend
+        run: npm install
 
-      - name: Start server
+      - name: Start backend
         run: |
+          cd backend
           PORT=8080 node server.js &
-          sleep 5
-          curl -f http://localhost:8080
+
+      - name: Wait for backend
+        run: npx wait-on http://localhost:8080
+
+      - name: Test backend
+        run: curl -f http://localhost:8080
+
+
+  frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm install
+
+      - name: Start frontend
+        run: |
+          cd frontend
+          PORT=5173 npm run dev &
+
+      - name: Wait for frontend
+        run: npx wait-on http://localhost:5173
+
+      - name: Test frontend
+        run: curl -f http://localhost:5173
