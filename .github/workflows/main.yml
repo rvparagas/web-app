@@ -19,15 +19,15 @@ jobs:
         run: |
           pwd
           ls -la
-          ls -la ./back-end
+          ls -la ./backend
 
       - name: Install backend deps
         run: npm install
-        working-directory: ./back-end
+        working-directory: ./backend
 
       - name: Start server
         run: |
           PORT=8080 npm start &
           sleep 5
           curl -f http://localhost:8080
-        working-directory: ./back-end
+        working-directory: ./backend

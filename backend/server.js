@@ -58,8 +58,8 @@ app.use("/api/user", userRoute);
 // Parse JSON request bodies (for POST)
 app.use(express.json());
 
-// Serve static assets from front-end/public/
-app.use('/', express.static(path.join(__dirname, '../front-end/public')));
+// Serve static assets from frontend/public/
+app.use('/', express.static(path.join(__dirname, '../frontend/public')));
 
 // --- Database helpers (read/write JSON file) ---
 function readDb() {
@@ -162,7 +162,7 @@ app.delete('/api/notes/:id', (req, res) => {
 });
 
 // --- HTML routes (3 pages with shared layout via static CSS) ---
-const viewsDir = path.join(__dirname, '../front-end/views');
+const viewsDir = path.join(__dirname, '../frontend/views');
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(viewsDir, 'index.html'));
