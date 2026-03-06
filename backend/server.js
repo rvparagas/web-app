@@ -193,4 +193,3 @@ app.use((req, res) => {
     }
     res.status(404).sendFile(path.join(viewsDir, '404.html'));
 });
-
