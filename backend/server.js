@@ -11,6 +11,10 @@ const mongoose = require('mongoose');
 const userRoute = require('./routes/user.route');
 const User = require('./models/user.model');
 
+const DB_PORT = '27017';
+const DB_HOST = 'localhost';
+const DB_NAME = 'usernotes';
+
 
 const testUsers = [
     { passage: 'Quotation 1', source: 'Source 1 ', commentary: 'Commentary 1', tag: 'tag1' },
@@ -18,6 +22,20 @@ const testUsers = [
     { passage: 'Quotation 3', source: 'Source 3 ', commentary: 'Commentary 3', tag: 'tag3' },
 
 ];
+
+async function start()
+{
+    try{
+        await mongoose.connect(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`);
+        console.log('MongoDB connected');
+    }
+    catch (err){
+        console.error('MongoDB connection failed: ', err.message);
+        process.exit(1);
+    }
+};
+
+start();
 
 
 //Added Test Users To Check To see if Connected To MongoDB 
