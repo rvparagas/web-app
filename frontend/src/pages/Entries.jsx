@@ -6,9 +6,13 @@ const API = 'http://localhost:8080/api/user'
 
 function Entries() {
   const [entries, setEntries] = useState([])
+  const [selectedTag, setSelectedTag] = useState(null)
   const [form, setForm] = useState({ passage: '', source: '', commentary: '', tag: '' })
   const [showForm, setShowForm] = useState(false)
   const [error, setError] = useState(null)
+
+  const tags = [...new Set(entries.map(e => e.tag).filter(Boolean))]
+  const filtered = selectedTag ? entries.filter(e => e.tag === selectedTag) : entries
 
   useEffect(() => {
     fetchEntries()
@@ -74,9 +78,23 @@ function Entries() {
         </div>
       )}
 
-      {entries.length === 0
+      {tags.length > 0 && (
+        <div className="tag-filters">
+          {tags.map(tag => (
+            <button
+              key={tag}
+              className={`tag-filter ${selectedTag === tag ? 'active' : ''}`}
+              onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {filtered.length === 0
         ? <p className="empty">No entries yet. Add one above.</p>
-        : entries.map(entry => (
+        : filtered.map(entry => (
             <EntryCard
               key={entry._id}
               entry={entry}

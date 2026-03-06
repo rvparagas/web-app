@@ -61,3 +61,23 @@
   text-align: center;
   padding: 3rem 0;
 }
+
+.tag-filters {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.tag-filter {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 0.3rem 0.8rem;
+  font-size: 0.82rem;
+}
+
+.tag-filter:hover, .tag-filter.active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
