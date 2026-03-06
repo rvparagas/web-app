@@ -1,0 +1,82 @@
+.entry-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.entry-passage {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 0.4rem;
+}
+
+.entry-source {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 0.8rem;
+}
+
+.entry-commentary {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--text);
+  border-left: 2px solid var(--border);
+  padding-left: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.entry-tag {
+  display: inline-block;
+  font-size: 0.78rem;
+  background-color: var(--bg);
+  border: 1px solid var(--border);
+  padding: 0.2rem 0.6rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.entry-edit textarea,
+.entry-edit input {
+  width: 100%;
+  display: block;
+  margin-bottom: 0.7rem;
+  padding: 0.5rem;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.92rem;
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.entry-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.btn-ghost {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+}
+
+.btn-ghost:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.btn-danger {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--danger);
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+}
+
+.btn-danger:hover {
+  border-color: var(--danger);
+}

@@ -2,22 +2,12 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema(
     {
-        id: {
-            type: Number,
-            required: true,
-            unique: true,
-        },
-        notes: {
-            type: String,
-            required: true,
-        }
-        
+        passage: { type: String, required: true },
+        source: { type: String, required: true },
+        commentary: { type: String, default: '' },
+        tag: { type: String, default: '' },
     },
-    //It creates 2 field which lets us know if a object is created or when it was last updated
-    {
-        timestamps: true,
-    }
-
+    { timestamps: true }
 );
 
 const User = mongoose.model("User", userSchema);
