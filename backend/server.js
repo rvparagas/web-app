@@ -8,14 +8,8 @@ const path = require('path');
 const PORT = 8080;
 const DB_PATH = path.join(__dirname, 'database.json');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
 const userRoute = require('./routes/user.route');
 const User = require('./models/user.model');
-
-
-
-
-dotenv.config();
 
 
 const testUsers = [
@@ -24,7 +18,6 @@ const testUsers = [
     { passage: 'Quotation 3', source: 'Source 3 ', commentary: 'Commentary 3', tag: 'tag3' },
 
 ];
-
 
 
 //Added Test Users To Check To see if Connected To MongoDB 
@@ -40,16 +33,6 @@ async function addTestUsersToMongoDB() {
 
     console.log('Users already exist. Skipping seed.');
 }
-
-// Uses the env package to have clean coding (do 'npm i dotenv' to connect it properly)
-mongoose.connect(process.env.MONGO)
-    .then(async () => {
-        console.log('MongoDB is connected!');
-        await addTestUsersToMongoDB();
-    })
-    .catch((err) => console.log(err));
-
-
 
 const app = express();
 
