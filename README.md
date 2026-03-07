@@ -22,13 +22,14 @@ This is a notes app for CPS630 A2. The app uses a **Node.js + Express** backend 
 
 ### REST API (CRUD)
 
-| Method | Description | Status codes |
-|--------|--------|-------------|--------------|
-| GET | `/api/user` (read all entries) | 200, 500 |
-| GET | `/api/user/:id` (read one entry) | 200, 404, 500 |
-| POST | `/api/user` (create entry) | 201, 400 |
-| PUT | `/api/user/:id` (update entry) | 200, 400, 404 |
-| DELETE | `/api/user/:id` (delete entry) | 204, 404, 500 |
+| Method | Endpoint | Description | Status codes |
+|--------|----------|-------------|--------------|
+| GET | `/api/user` | Read all entries | 200, 500 |
+| GET | `/api/user/:id` | Read one entry | 200, 404, 500 |
+| POST | `/api/user` | Create entry | 201, 400 |
+| PUT | `/api/user/:id` | Update entry | 200, 400, 404 |
+| DELETE | `/api/user/:id` | Delete entry | 204, 404, 500 |
+
 
 Sample body for POST/PUT:
 `{ "passage": "Quote text", "source": "Book/Author", "commentary": "Optional note", "tag": "optional-tag" }`
