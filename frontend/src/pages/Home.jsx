@@ -17,7 +17,7 @@ function Home() {
       <section className="features">
         <div className="feature-card">
           <h3>Collect</h3>
-          <p>Save passages from books, essays, or your own thought.</p>
+          <p>Save passages from books, essays, or your own thoughts.</p>
         </div>
         <div className="feature-card">
           <h3>Annotate</h3>

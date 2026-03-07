@@ -2,6 +2,7 @@ const express = require('express');
 const User = require('../models/user.model');
 const router = express.Router();
 
+// READ all items
 router.get('/', async (req, res) => {
     try {
         const entries = await User.find().sort({ createdAt: -1 });
@@ -11,6 +12,7 @@ router.get('/', async (req, res) => {
     }
 });
 
+// READ one item
 router.get('/:id', async (req, res) => {
     try {
         const entry = await User.findById(req.params.id);
@@ -21,6 +23,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+// CREATE one item
 router.post('/', async (req, res) => {
     try {
         const entry = await User.create(req.body);
@@ -30,9 +33,10 @@ router.post('/', async (req, res) => {
     }
 });
 
+// UPDATE one item
 router.put('/:id', async (req, res) => {
     try {
-        const entry = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        const entry = await User.findByIdAndUpdate(req.params.id, req.body, { runValidators: true, returnDocument: 'after' });
         if (!entry) return res.status(404).json({ error: 'Entry not found' });
         res.status(200).json(entry);
     } catch (err) {
@@ -40,6 +44,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+// DELETE one item
 router.delete('/:id', async (req, res) => {
     try {
         const entry = await User.findByIdAndDelete(req.params.id);
