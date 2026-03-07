@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a notes app for CPS630 A2. The app uses a **Node.js + Express** backend connected to **MongoDB** (Mongoose) with a REST API for CRUD operations. Data is stored in MongoDB. On first run, if the collection is empty, the server seeds notes from `backend/data.json`.
+This is a notes app for CPS630 A2. The app uses a **Node.js + Express** backend connected to **MongoDB** (Mongoose) with a REST API for CRUD operations. Data is stored in MongoDB. On first run, if the collection is empty, the server seeds notes from `backend/data.json`. In the future, more pages could be added using the React framework, as well as re-adding a search function (as seen in A1) and other granular sorting functions.
 
 ## Documentation
 
@@ -52,4 +52,4 @@ A2 requires **at least three React + Vite views** and the front end to start wit
 
 ## Reflection
 
-This branch adds MongoDB to the app: the backend connects to MongoDB on startup, seeds data if the collection is empty, and implements full CRUD (create, read one, read many, update, delete) with appropriate HTTP methods and status codes under `/api/user`. The backend is modular (separate model and route files).
+This branch adds MongoDB to the app: the backend connects to MongoDB on startup, seeds data if the collection is empty, and implements full CRUD (create, read one, read many, update, delete) with appropriate HTTP methods and status codes under `/api/user`. The backend is modular (separate model and route files). Very little challenges were faced when expanding on this project; the main one being our web app not wanting to connect to MongoDB during development due to changes on separate branches, which was later fixed.
