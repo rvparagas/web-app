@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a notes app for CPS630 A2. Users can view a list of notes, add new ones, update them, and delete them. The app uses a **Node.js + Express** backend connected to **MongoDB** (Mongoose), with three HTML pages (Home, Notes, About) and a REST API. Data is stored in MongoDB. On first run, if the notes collection is empty, the server seeds three test notes. In the future this could be extended with a React+Vite front end (e.g. on the `frontend` branch), auth, or more CRUD resources.
+This is a notes app for CPS630 A2. Users can view a list of notes, add new ones, update them, and delete them. The app uses a **Node.js + Express** backend connected to **MongoDB** (Mongoose), with three HTML pages (Home, Notes, About) and a REST API. Data is stored in MongoDB. On first run, if the collection is empty, the server seeds three test notes. In the future this could be extended with a React+Vite front end (e.g. on the `frontend` branch), auth, or more CRUD resources.
 
 ## Documentation
 
@@ -23,15 +23,15 @@ This is a notes app for CPS630 A2. Users can view a list of notes, add new ones,
 
 ### REST API (CRUD)
 
-| Method | Route | Description | Status codes |
+| Method | Description | Status codes |
 |--------|--------|-------------|--------------|
-| GET | `/api/notes` | Read multiple notes | 200, 500 |
-| GET | `/api/notes/:id` | Read one note | 200, 400, 404, 500 |
-| POST | `/api/notes` | Create a note; body `{ "note": "text" }` | 201, 400, 500 |
-| PUT | `/api/notes/:id` | Update a note; body `{ "note": "text" }` | 200, 400, 404, 500 |
-| DELETE | `/api/notes/:id` | Delete a note | 204, 400, 404, 500 |
+| GET | Read multiple notes | 200, 500 |
+| GET | Read one note | 200, 400, 404, 500 |
+| POST | Create a note; body `{ "note": "text" }` | 201, 400, 500 |
+| PUT | Update a note; body `{ "note": "text" }` | 200, 400, 404, 500 |
+| DELETE | Delete a note | 204, 400, 404, 500 |
 
-Responses use JSON. Unknown API routes return 404 JSON; unknown page routes serve the 404 HTML page.
+API endpoints return JSON responses. Unknown API routes return a 404 JSON error, while unknown non-API routes serve the 404 HTML page.
 
 ### Project structure (MongoDB branch)
 
