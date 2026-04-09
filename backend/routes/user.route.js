@@ -1,11 +1,13 @@
 const express = require('express');
 const User = require('../models/user.model');
+const auth = require('../middleware/auth');
 const router = express.Router();
 
 // READ all items
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     try {
-        const entries = await User.find().sort({ createdAt: -1 });
+        const entries = await User.find({ owner: req.user.userId })
+            .sort({ createdAt: -1 });
         res.status(200).json(entries);
     } catch (err) {
         res.status(500).json({ error: 'Failed to fetch entries', details: err.message });
@@ -13,9 +15,11 @@ router.get('/', async (req, res) => {
 });
 
 // READ one item
-router.get('/:id', async (req, res) => {
+router.get('/:id', auth, async (req, res) => {
     try {
-        const entry = await User.findById(req.params.id);
+        const entry = await User.findOne({
+             _id: req.params.id,
+            owner: req.user.userId});
         if (!entry) return res.status(404).json({ error: 'Entry not found' });
         res.status(200).json(entry);
     } catch (err) {
@@ -24,9 +28,12 @@ router.get('/:id', async (req, res) => {
 });
 
 // CREATE one item
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     try {
-        const entry = await User.create(req.body);
+        const entry = await User.create({
+            ...req.body,
+            owner: req.user.userId
+        });
         res.status(201).json(entry);
     } catch (err) {
         res.status(400).json({ error: 'Failed to create entry', details: err.message });
@@ -34,9 +41,12 @@ router.post('/', async (req, res) => {
 });
 
 // UPDATE one item
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
     try {
-        const entry = await User.findByIdAndUpdate(req.params.id, req.body, { runValidators: true, returnDocument: 'after' });
+        const entry = await User.findOneAndUpdate(
+          { _id: req.params.id, owner: req.user.userId },
+          req.body,
+          { runValidators: true, returnDocument: 'after' });
         if (!entry) return res.status(404).json({ error: 'Entry not found' });
         res.status(200).json(entry);
     } catch (err) {
@@ -45,9 +55,11 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE one item
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
     try {
-        const entry = await User.findByIdAndDelete(req.params.id);
+        const entry = await User.findOneAndDelete({
+            _id: req.params.id,
+            owner: req.user.userId});
         if (!entry) return res.status(404).json({ error: 'Entry not found' });
         res.status(204).send();
     } catch (err) {

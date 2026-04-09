@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const express = require('express');
 const cors = require('cors')
 const app = express();
@@ -5,6 +7,7 @@ const app = express();
 // Import Mongo database
 const mongoose = require('mongoose');
 const userRoute = require('./routes/user.route');
+const authRoute = require('./routes/auth.route');
 
 const PORT = 8080;
 const User = require('./models/user.model');
@@ -48,11 +51,13 @@ addNotesToMongoDB();
 // Enable CORS for frontend requests
 app.use(cors());
 
-// Start server
-app.listen(PORT, () => console.log('Server started on port', PORT));
-
 // Parse JSON request bodies (for POST)
 app.use(express.json());
 
 // Testing
-app.use("/api/user", userRoute)
+app.use("/api/user", userRoute);
+app.use("/api/auth", authRoute);
+
+// Start server
+app.listen(PORT, () => console.log('Server started on port', PORT));
+

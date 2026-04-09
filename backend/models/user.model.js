@@ -6,6 +6,13 @@ const userSchema = new mongoose.Schema(
         source: { type: String, required: true, trim: true },
         commentary: { type: String, default: '', trim: true },
         tag: { type: String, default: '', trim: true },
+
+        // link between the notes and the logged-in user
+        owner: { 
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: 'AuthUser', 
+            required: true 
+        }
     },
     { timestamps: true }
 );
