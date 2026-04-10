@@ -1,5 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import EntryCard from '../components/EntryCard'
+import { useAuth } from '../context/AuthContext'
+import { useSocket } from '../context/SocketContext'
 import './Entries.css'
 
 const API = 'http://localhost:8080/api/user'
@@ -10,22 +12,67 @@ function Entries() {
   const [form, setForm] = useState({ passage: '', source: '', commentary: '', tag: '' })
   const [showForm, setShowForm] = useState(false)
   const [error, setError] = useState(null)
+  const { token } = useAuth()
+  const { socket, emitTyping } = useSocket()
+  const typingTimeoutRef = useRef(null)
 
   const tags = [...new Set(entries.map(e => e.tag).filter(Boolean))]
   const filtered = selectedTag ? entries.filter(e => e.tag === selectedTag) : entries
 
+  const authHeaders = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+
   useEffect(() => {
     fetchEntries()
-  }, [])
+  }, [token])
+
+  useEffect(() => {
+    if (!socket) return
+
+    const handleCreated = (entry) => {
+      setEntries(prev => [entry, ...prev])
+    }
+
+    const handleUpdated = (entry) => {
+      setEntries(prev => prev.map(e => e._id === entry._id ? entry : e))
+    }
+
+    const handleDeleted = ({ _id }) => {
+      setEntries(prev => prev.filter(e => e._id !== _id))
+    }
+
+    socket.on('entry:created', handleCreated)
+    socket.on('entry:updated', handleUpdated)
+    socket.on('entry:deleted', handleDeleted)
+
+    return () => {
+      socket.off('entry:created', handleCreated)
+      socket.off('entry:updated', handleUpdated)
+      socket.off('entry:deleted', handleDeleted)
+    }
+  }, [socket])
 
   async function fetchEntries() {
-    const res = await fetch(API)
-    const data = await res.json()
-    setEntries(data)
+    try {
+      const res = await fetch(API, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      })
+      if (!res.ok) throw new Error('Failed to fetch')
+      const data = await res.json()
+      setEntries(data)
+    } catch (err) {
+      setError('Failed to load entries')
+    }
   }
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value })
+    
+    emitTyping(true)
+    if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current)
+    typingTimeoutRef.current = setTimeout(() => emitTyping(false), 1000)
   }
 
   async function handleCreate() {
@@ -33,29 +80,43 @@ function Entries() {
       setError('Passage and source are required.')
       return
     }
-    await fetch(API, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form),
-    })
-    setForm({ passage: '', source: '', commentary: '', tag: '' })
-    setShowForm(false)
-    setError(null)
-    fetchEntries()
+    try {
+      const res = await fetch(API, {
+        method: 'POST',
+        headers: authHeaders,
+        body: JSON.stringify(form),
+      })
+      if (!res.ok) throw new Error('Failed to create')
+      setForm({ passage: '', source: '', commentary: '', tag: '' })
+      setShowForm(false)
+      setError(null)
+      emitTyping(false)
+    } catch (err) {
+      setError('Failed to create entry')
+    }
   }
 
   async function handleDelete(id) {
-    await fetch(`${API}/${id}`, { method: 'DELETE' })
-    fetchEntries()
+    try {
+      await fetch(`${API}/${id}`, { 
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      })
+    } catch (err) {
+      setError('Failed to delete entry')
+    }
   }
 
   async function handleUpdate(id, data) {
-    await fetch(`${API}/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    })
-    fetchEntries()
+    try {
+      await fetch(`${API}/${id}`, {
+        method: 'PUT',
+        headers: authHeaders,
+        body: JSON.stringify(data),
+      })
+    } catch (err) {
+      setError('Failed to update entry')
+    }
   }
 
   return (

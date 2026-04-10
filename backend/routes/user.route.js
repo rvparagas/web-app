@@ -34,6 +34,18 @@ router.post('/', auth, async (req, res) => {
             ...req.body,
             owner: req.user.userId
         });
+        
+        // Emit real-time event for new entry
+        const io = req.app.get('io');
+        io.emit('activity:new', {
+            type: 'create',
+            user: req.user.email || 'A user',
+            message: 'created a new entry',
+            entryId: entry._id,
+            timestamp: new Date().toISOString()
+        });
+        io.emit('entry:created', entry);
+        
         res.status(201).json(entry);
     } catch (err) {
         res.status(400).json({ error: 'Failed to create entry', details: err.message });
@@ -48,6 +60,18 @@ router.put('/:id', auth, async (req, res) => {
           req.body,
           { runValidators: true, returnDocument: 'after' });
         if (!entry) return res.status(404).json({ error: 'Entry not found' });
+        
+        // Emit real-time event for updated entry
+        const io = req.app.get('io');
+        io.emit('activity:new', {
+            type: 'update',
+            user: req.user.email || 'A user',
+            message: 'updated an entry',
+            entryId: entry._id,
+            timestamp: new Date().toISOString()
+        });
+        io.emit('entry:updated', entry);
+        
         res.status(200).json(entry);
     } catch (err) {
         res.status(400).json({ error: 'Failed to update entry', details: err.message });
@@ -61,6 +85,18 @@ router.delete('/:id', auth, async (req, res) => {
             _id: req.params.id,
             owner: req.user.userId});
         if (!entry) return res.status(404).json({ error: 'Entry not found' });
+        
+        // Emit real-time event for deleted entry
+        const io = req.app.get('io');
+        io.emit('activity:new', {
+            type: 'delete',
+            user: req.user.email || 'A user',
+            message: 'deleted an entry',
+            entryId: req.params.id,
+            timestamp: new Date().toISOString()
+        });
+        io.emit('entry:deleted', { _id: req.params.id });
+        
         res.status(204).send();
     } catch (err) {
         res.status(500).json({ error: 'Failed to delete entry', details: err.message });
