@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema(
+const noteSchema = new mongoose.Schema(
     {
         passage: { type: String, required: true, trim: true },
         source: { type: String, required: true, trim: true },
@@ -17,6 +17,6 @@ const userSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-const User = mongoose.model("User", userSchema);
+const Note = mongoose.model("Note", noteSchema);
 
-module.exports = User;
+module.exports = Note;
