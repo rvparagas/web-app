@@ -1,7 +1,7 @@
 {
   "name": "web-app",
   "version": "1.0.0",
-  "description": "CPS630 A2 - MERN CRUD app (Express + MongoDB + frontend)",
+  "description": "CPS630 A3",
   "private": true,
   "scripts": {
     "start": "cd backend && node server.js",
