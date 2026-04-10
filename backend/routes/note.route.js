@@ -1,12 +1,12 @@
 const express = require('express');
-const User = require('../models/user.model');
+const Note = require('../models/note.model');
 const auth = require('../middleware/auth');
 const router = express.Router();
 
 // READ all items
 router.get('/', auth, async (req, res) => {
     try {
-        const entries = await User.find({ owner: req.user.userId })
+        const entries = await Note.find({ owner: req.user.userId })
             .sort({ createdAt: -1 });
         res.status(200).json(entries);
     } catch (err) {
@@ -17,7 +17,7 @@ router.get('/', auth, async (req, res) => {
 // READ one item
 router.get('/:id', auth, async (req, res) => {
     try {
-        const entry = await User.findOne({
+        const entry = await Note.findOne({
              _id: req.params.id,
             owner: req.user.userId});
         if (!entry) return res.status(404).json({ error: 'Entry not found' });
@@ -30,7 +30,7 @@ router.get('/:id', auth, async (req, res) => {
 // CREATE one item
 router.post('/', auth, async (req, res) => {
     try {
-        const entry = await User.create({
+        const entry = await Note.create({
             ...req.body,
             owner: req.user.userId
         });
@@ -55,7 +55,7 @@ router.post('/', auth, async (req, res) => {
 // UPDATE one item
 router.put('/:id', auth, async (req, res) => {
     try {
-        const entry = await User.findOneAndUpdate(
+        const entry = await Note.findOneAndUpdate(
           { _id: req.params.id, owner: req.user.userId },
           req.body,
           { runValidators: true, returnDocument: 'after' });
@@ -81,7 +81,7 @@ router.put('/:id', auth, async (req, res) => {
 // DELETE one item
 router.delete('/:id', auth, async (req, res) => {
     try {
-        const entry = await User.findOneAndDelete({
+        const entry = await Note.findOneAndDelete({
             _id: req.params.id,
             owner: req.user.userId});
         if (!entry) return res.status(404).json({ error: 'Entry not found' });

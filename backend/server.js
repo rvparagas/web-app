@@ -18,11 +18,10 @@ const io = new Server(server, {
 
 // Import Mongo database
 const mongoose = require('mongoose');
-const userRoute = require('./routes/user.route');
+const userRoute = require('./routes/note.route');
 const authRoute = require('./routes/auth.route');
 
 const PORT = 8080;
-const User = require('./models/user.model');
 
 const DB_PORT = '27017';
 const DB_HOST = 'localhost';
