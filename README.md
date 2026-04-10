@@ -122,10 +122,10 @@ web-app/
 │   │   └── auth.js           # JWT authentication middleware
 │   ├── models/
 │   │   ├── authUser.model.js # User credentials schema
-│   │   └── user.model.js     # Entry/note schema
+│   │   └── note.model.js     # Note/entry schema
 │   ├── routes/
 │   │   ├── auth.route.js     # Register/login endpoints
-│   │   └── user.route.js     # CRUD endpoints for entries
+│   │   └── note.route.js     # CRUD endpoints for notes/entries
 │   ├── server.js             # Express + Socket.io server
 │   └── package.json
 ├── frontend/

@@ -10,11 +10,17 @@ function Register() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const { register, login } = useAuth()
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
   const navigate = useNavigate()
 
   async function handleSubmit(e) {
     e.preventDefault()
     setError('')
+
+    if (!emailRegex.test(email)) {
+      setError('Invalid email')
+      return
+    }
 
     if (password !== confirmPassword) {
       setError('Passwords do not match')
