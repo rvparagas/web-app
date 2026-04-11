@@ -55,6 +55,8 @@ app.set('io', io);
 
 // Socket.io connection handling
 const onlineUsers = new Map();
+app.set('onlineUsers', onlineUsers);
+
 
 io.on('connection', (socket) => {
     console.log('User connected:', socket.id);

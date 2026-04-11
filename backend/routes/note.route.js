@@ -17,9 +17,7 @@ router.get('/', auth, async (req, res) => {
 // READ one item
 router.get('/:id', auth, async (req, res) => {
     try {
-        const entry = await Note.findOne({
-             _id: req.params.id,
-            owner: req.user.userId});
+        const entry = await Note.findOne({ _id: req.params.id, owner: req.user.userId });
         if (!entry) return res.status(404).json({ error: 'Entry not found' });
         res.status(200).json(entry);
     } catch (err) {
@@ -30,13 +28,9 @@ router.get('/:id', auth, async (req, res) => {
 // CREATE one item
 router.post('/', auth, async (req, res) => {
     try {
-        const entry = await Note.create({
-            ...req.body,
-            owner: req.user.userId
-        });
-        
-        // Emit real-time event for new entry
+        const entry = await Note.create({ ...req.body, owner: req.user.userId });
         const io = req.app.get('io');
+        const onlineUsers = req.app.get('onlineUsers');
         io.emit('activity:new', {
             type: 'create',
             user: req.user.email || 'A user',
@@ -44,8 +38,11 @@ router.post('/', auth, async (req, res) => {
             entryId: entry._id,
             timestamp: new Date().toISOString()
         });
-        io.emit('entry:created', entry);
-        
+        for (const [socketId, userData] of onlineUsers.entries()) {
+            if (userData.email === req.user.email) {
+                io.to(socketId).emit('entry:created', entry);
+            }
+        }
         res.status(201).json(entry);
     } catch (err) {
         res.status(400).json({ error: 'Failed to create entry', details: err.message });
@@ -56,13 +53,13 @@ router.post('/', auth, async (req, res) => {
 router.put('/:id', auth, async (req, res) => {
     try {
         const entry = await Note.findOneAndUpdate(
-          { _id: req.params.id, owner: req.user.userId },
-          req.body,
-          { runValidators: true, returnDocument: 'after' });
+            { _id: req.params.id, owner: req.user.userId },
+            req.body,
+            { runValidators: true, returnDocument: 'after' }
+        );
         if (!entry) return res.status(404).json({ error: 'Entry not found' });
-        
-        // Emit real-time event for updated entry
         const io = req.app.get('io');
+        const onlineUsers = req.app.get('onlineUsers');
         io.emit('activity:new', {
             type: 'update',
             user: req.user.email || 'A user',
@@ -70,8 +67,11 @@ router.put('/:id', auth, async (req, res) => {
             entryId: entry._id,
             timestamp: new Date().toISOString()
         });
-        io.emit('entry:updated', entry);
-        
+        for (const [socketId, userData] of onlineUsers.entries()) {
+            if (userData.email === req.user.email) {
+                io.to(socketId).emit('entry:updated', entry);
+            }
+        }
         res.status(200).json(entry);
     } catch (err) {
         res.status(400).json({ error: 'Failed to update entry', details: err.message });
@@ -81,13 +81,10 @@ router.put('/:id', auth, async (req, res) => {
 // DELETE one item
 router.delete('/:id', auth, async (req, res) => {
     try {
-        const entry = await Note.findOneAndDelete({
-            _id: req.params.id,
-            owner: req.user.userId});
+        const entry = await Note.findOneAndDelete({ _id: req.params.id, owner: req.user.userId });
         if (!entry) return res.status(404).json({ error: 'Entry not found' });
-        
-        // Emit real-time event for deleted entry
         const io = req.app.get('io');
+        const onlineUsers = req.app.get('onlineUsers');
         io.emit('activity:new', {
             type: 'delete',
             user: req.user.email || 'A user',
@@ -95,8 +92,11 @@ router.delete('/:id', auth, async (req, res) => {
             entryId: req.params.id,
             timestamp: new Date().toISOString()
         });
-        io.emit('entry:deleted', { _id: req.params.id });
-        
+        for (const [socketId, userData] of onlineUsers.entries()) {
+            if (userData.email === req.user.email) {
+                io.to(socketId).emit('entry:deleted', { _id: req.params.id });
+            }
+        }
         res.status(204).send();
     } catch (err) {
         res.status(500).json({ error: 'Failed to delete entry', details: err.message });
